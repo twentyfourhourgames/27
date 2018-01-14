@@ -21,6 +21,7 @@ public class BoardManager : MonoBehaviour {
         {3,1,5,0,4,2 },
         {2,1,3,5,4,0 }
     };
+
     Space[] spaces;
     Queue<Block> blockPool;
     public GameObject blockPrefab;
@@ -83,6 +84,9 @@ public class BoardManager : MonoBehaviour {
             bestBlock = 2;
             colorIndex = 1;
             UpdateScoreDisplay();
+        }
+        if (count == 1 && CheckGameOver()) {
+            StartCoroutine(DoGameOver());
         }
     }
 
@@ -184,5 +188,24 @@ public class BoardManager : MonoBehaviour {
         scoreText.text = score.ToString();
         blockText.text = bestBlock.ToString();
         blockText.color = Block.colors[colorIndex];
+    }
+
+    bool CheckGameOver() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                int valA = spaces[rows[i, j, 0]].block.value,
+                    valB = spaces[rows[i, j, 1]].block.value,
+                    valC = spaces[rows[i, j, 2]].block.value;
+                if (valA == valB || valB == valC)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    IEnumerator DoGameOver() {
+        isReady = false;
+        print("GAME OVER");
+        yield return null;
     }
 }
