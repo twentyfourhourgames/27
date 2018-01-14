@@ -14,10 +14,19 @@ public class BoardManager : MonoBehaviour {
         { {0,3,6 }, {1,4,7 }, {2,5,8 }, {9,12,15 }, {10,13,16 }, {11,14,17 }, {18,21,24 }, {19,22,25 }, {20,23,26 } },
         { {0,9,18 }, {1,10,19 }, {2,11,20 }, {3,12,21 }, {4,13,22 }, {5,14,23 }, {6,15,24 }, {7,16,25 }, {8,17,26 } }
     };
+    int[,] dirByRotation = {
+        {0,1,2,3,4,5 },
+        {5,1,0,2,4,3 },
+        {3,1,5,0,4,2 },
+        {2,1,3,5,4,0 }
+    };
     Space[] spaces;
     Queue<Block> blockPool;
     public GameObject blockPrefab;
+    public CamRotator camRotator;
+
     int[] freeSpaces;
+    int rotation;
     bool hasMoved;
     bool isReady;
 
@@ -64,7 +73,21 @@ public class BoardManager : MonoBehaviour {
 
     public void MoveClick(int btn) {
         if (isReady)
-            Move((btn));
+            Move(dirByRotation[rotation,btn]);
+    }
+
+    public void RotateClick(bool right) {
+        if (isReady) {
+            if (right) {
+                rotation = (rotation + 1) % 4;
+                camRotator.Rotate(true);
+            }
+            else {               
+                rotation = rotation == 0 ? 3 : rotation - 1;
+                camRotator.Rotate(false);
+            }
+            StartCoroutine(WaitForAnim(false));
+        }
     }
 
     void Move(int dir) {
@@ -106,7 +129,7 @@ public class BoardManager : MonoBehaviour {
             }
         }
         if (hasMoved) {
-            StartCoroutine(WaitAndSpawn());
+            StartCoroutine(WaitForAnim(true));
         }
     }
 
@@ -124,10 +147,11 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
-    IEnumerator WaitAndSpawn() {
+    IEnumerator WaitForAnim(bool spawnAfterWait) {
         isReady = false;
         yield return new WaitForSeconds(0.2f);
-        AddBlock();
+        if (spawnAfterWait)
+            AddBlock();
         isReady = true;
     }
 }
