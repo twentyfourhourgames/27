@@ -24,9 +24,9 @@ public class Block : MonoBehaviour {
         props = new MaterialPropertyBlock();
     }
 
-    public void Spawn(Vector3 pos) {
+    public void Spawn(Vector3 pos, int val) {
         transform.position = pos;
-        value = Random.Range(0, 10) < 9 ? 1 : 2;
+        value = val;
         colorIndex = value - 1;
         props.SetColor("_Color", colors[colorIndex]);
         renderer.SetPropertyBlock(props);

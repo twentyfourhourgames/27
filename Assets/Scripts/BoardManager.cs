@@ -30,6 +30,9 @@ public class BoardManager : MonoBehaviour {
     bool hasMoved;
     bool isReady;
 
+    int score;
+    int bestBlock;
+
     void Awake() {
         spaces = new Space[27];
         freeSpaces = new int[27];
@@ -53,7 +56,12 @@ public class BoardManager : MonoBehaviour {
                 blockPool.Enqueue(b);
             }
         }
-        AddBlock();
+        score = 0;
+        bestBlock = 1;
+        int num = Random.Range(0, 27);
+        Block bl = blockPool.Dequeue();
+        spaces[num].block = bl;
+        bl.Spawn(spaces[num].pos, 1);
         isReady = true;
     }
 
@@ -68,7 +76,8 @@ public class BoardManager : MonoBehaviour {
         int num = freeSpaces[Random.Range(0, count)];
         Block b = blockPool.Dequeue();
         spaces[num].block = b;
-        b.Spawn(spaces[num].pos);
+        int val = Random.Range(0, 10) < 9 ? 1 : 2;
+        b.Spawn(spaces[num].pos, val);
     }
 
     public void MoveClick(int btn) {
@@ -140,6 +149,10 @@ public class BoardManager : MonoBehaviour {
         fromBlock.Move(spaces[to].pos, merge);
         if (merge) {
             spaces[to].block.Merge();
+            int toVal = spaces[to].block.value;
+            score += toVal;
+            if (toVal > bestBlock)
+                bestBlock = toVal;
             blockPool.Enqueue(fromBlock);
         }
         else {
