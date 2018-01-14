@@ -18,10 +18,28 @@ public class CamRotator : MonoBehaviour {
         float t = 0;
         while (t < 1) {
             float curr = Mathf.Lerp(start, end, SmoothStep(t));
-            transform.eulerAngles = new Vector3(35.264f, curr, 0);
+            transform.eulerAngles = new Vector3(35, curr, 0);
             t += 5 * Time.deltaTime;
             yield return null;
         }
-        transform.eulerAngles = new Vector3(35.264f, end, 0);
+        transform.eulerAngles = new Vector3(35f, end, 0);
+    }
+
+    public void VertRotate(bool lookUp) {
+        StartCoroutine(DoVertRotate(lookUp));
+    }
+
+    IEnumerator DoVertRotate(bool lookUp) {
+        float currY = transform.eulerAngles.y;
+        float t = 0;
+        while (t < 1) {
+            float currX = Mathf.Lerp(-35, 35, SmoothStep(t));
+            if (lookUp)
+                currX *= -1;
+            transform.eulerAngles = new Vector3(currX, currY, 0);
+            t += 5 * Time.deltaTime;
+            yield return null;
+        }
+        transform.eulerAngles = new Vector3(lookUp ? -35 : 35, currY, 0);
     }
 }

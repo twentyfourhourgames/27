@@ -19,7 +19,11 @@ public class BoardManager : MonoBehaviour {
         {0,1,2,3,4,5 },
         {5,1,0,2,4,3 },
         {3,1,5,0,4,2 },
-        {2,1,3,5,4,0 }
+        {2,1,3,5,4,0 },
+        {5,1,3,2,4,0 },
+        {3,1,2,0,4,5 },
+        {2,1,0,5,4,3 },
+        {0,1,5,3,4,2 },
     };
 
     Space[] spaces;
@@ -34,7 +38,7 @@ public class BoardManager : MonoBehaviour {
     Canvas gameCanvas, gameOverCanvas;
     int[] freeSpaces;
     int rotation;
-    bool hasMoved, hasMerged, isReady;
+    bool hasMoved, hasMerged, isReady, isLookingUp;
     int score, bestBlock, colorIndex;
 
     void Awake() {
@@ -97,8 +101,10 @@ public class BoardManager : MonoBehaviour {
     }
 
     public void MoveClick(int btn) {
-        if (isReady)
-            Move(dirByRotation[rotation,btn]);
+        if (isReady) {
+            int index = (isLookingUp ? 4 : 0) + rotation;
+            Move(dirByRotation[index, btn]);
+        }
     }
 
     public void RotateClick(bool right) {
@@ -111,6 +117,14 @@ public class BoardManager : MonoBehaviour {
                 rotation = rotation == 0 ? 3 : rotation - 1;
                 camRotator.Rotate(false);
             }
+            StartCoroutine(WaitForAnim(false));
+        }
+    }
+
+    public void VertRotateClick(bool lookUp) {
+        if (lookUp != isLookingUp) {
+            isLookingUp = lookUp;
+            camRotator.VertRotate(lookUp);
             StartCoroutine(WaitForAnim(false));
         }
     }
