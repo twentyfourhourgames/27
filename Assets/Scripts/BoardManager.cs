@@ -37,8 +37,7 @@ public class BoardManager : MonoBehaviour {
         }
         int num = freeSpaces[Random.Range(0, count)];
         Block b = blockPool.Dequeue();
-        b.value = Random.Range(0, 10) < 9 ? 1 : 2;
-        b.transform.position = spaces[num].pos;
         spaces[num].block = b;
+        b.Spawn(spaces[num].pos);
     }
 }
