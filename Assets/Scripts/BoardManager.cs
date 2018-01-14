@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour {
 
@@ -24,11 +25,10 @@ public class BoardManager : MonoBehaviour {
     Queue<Block> blockPool;
     public GameObject blockPrefab;
     public CamRotator camRotator;
-
+    public Text scoreText, blockText;
     int[] freeSpaces;
     int rotation;
-    bool hasMoved;
-    bool isReady;
+    bool hasMoved, hasMerged, isReady;
 
     int score;
     int bestBlock;
@@ -58,6 +58,8 @@ public class BoardManager : MonoBehaviour {
         }
         score = 0;
         bestBlock = 1;
+        scoreText.text = "0";
+        blockText.text = "1";
         int num = Random.Range(0, 27);
         Block bl = blockPool.Dequeue();
         spaces[num].block = bl;
@@ -78,6 +80,10 @@ public class BoardManager : MonoBehaviour {
         spaces[num].block = b;
         int val = Random.Range(0, 10) < 9 ? 1 : 2;
         b.Spawn(spaces[num].pos, val);
+        if (bestBlock == 1 && val == 2) {
+            bestBlock = 2;
+            blockText.text = "2";
+        }
     }
 
     public void MoveClick(int btn) {
@@ -154,6 +160,7 @@ public class BoardManager : MonoBehaviour {
             if (toVal > bestBlock)
                 bestBlock = toVal;
             blockPool.Enqueue(fromBlock);
+            hasMerged = true;
         }
         else {
             spaces[to].block = fromBlock;
@@ -165,6 +172,10 @@ public class BoardManager : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         if (spawnAfterWait)
             AddBlock();
+        if (hasMerged) {
+            scoreText.text = score.ToString();
+            blockText.text = bestBlock.ToString();
+        }
         isReady = true;
     }
 }
