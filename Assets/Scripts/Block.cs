@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 
-    static Color[] colors = {
+    public static Color[] colors = {
         Color.HSVToRGB(0,.5f,1), Color.HSVToRGB(1f/12, .5f, 1), Color.HSVToRGB(2f/12, .5f, 1), Color.HSVToRGB(3f/12,.5f,1),
         Color.HSVToRGB(4f/12,.5f,1), Color.HSVToRGB(5f/12, .5f, 1), Color.HSVToRGB(6f/12, .5f, 1), Color.HSVToRGB(7f/12,.5f,1),
         Color.HSVToRGB(8f/12,.5f,1), Color.HSVToRGB(9f/12, .5f, 1), Color.HSVToRGB(10f/12, .5f, 1), Color.HSVToRGB(11f/12,.5f,1),

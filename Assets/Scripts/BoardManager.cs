@@ -30,8 +30,7 @@ public class BoardManager : MonoBehaviour {
     int rotation;
     bool hasMoved, hasMerged, isReady;
 
-    int score;
-    int bestBlock;
+    int score, bestBlock, colorIndex;
 
     void Awake() {
         spaces = new Space[27];
@@ -58,8 +57,8 @@ public class BoardManager : MonoBehaviour {
         }
         score = 0;
         bestBlock = 1;
-        scoreText.text = "0";
-        blockText.text = "1";
+        colorIndex = 0;
+        UpdateScoreDisplay();
         int num = Random.Range(0, 27);
         Block bl = blockPool.Dequeue();
         spaces[num].block = bl;
@@ -82,7 +81,8 @@ public class BoardManager : MonoBehaviour {
         b.Spawn(spaces[num].pos, val);
         if (bestBlock == 1 && val == 2) {
             bestBlock = 2;
-            blockText.text = "2";
+            colorIndex = 1;
+            UpdateScoreDisplay();
         }
     }
 
@@ -157,8 +157,10 @@ public class BoardManager : MonoBehaviour {
             spaces[to].block.Merge();
             int toVal = spaces[to].block.value;
             score += toVal;
-            if (toVal > bestBlock)
+            if (toVal > bestBlock) {
                 bestBlock = toVal;
+                colorIndex++;
+            }
             blockPool.Enqueue(fromBlock);
             hasMerged = true;
         }
@@ -173,9 +175,14 @@ public class BoardManager : MonoBehaviour {
         if (spawnAfterWait)
             AddBlock();
         if (hasMerged) {
-            scoreText.text = score.ToString();
-            blockText.text = bestBlock.ToString();
+            UpdateScoreDisplay();
         }
         isReady = true;
+    }
+
+    void UpdateScoreDisplay() {
+        scoreText.text = score.ToString();
+        blockText.text = bestBlock.ToString();
+        blockText.color = Block.colors[colorIndex];
     }
 }
