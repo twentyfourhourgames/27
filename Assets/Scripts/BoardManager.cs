@@ -36,6 +36,9 @@ public class BoardManager : MonoBehaviour {
     Text scoreText, blockText, gameOverScoreText, gameOverBlockText;
     [SerializeField]
     Canvas gameCanvas, gameOverCanvas;
+    [SerializeField]
+    Button[] rotButtons;
+
     int[] freeSpaces;
     int rotation;
     bool hasMoved, hasMerged, isReady, isLookingUp;
@@ -111,11 +114,11 @@ public class BoardManager : MonoBehaviour {
         if (isReady) {
             if (right) {
                 rotation = (rotation + 1) % 4;
-                camRotator.Rotate(true);
+                camRotator.Rotate(true, isLookingUp);
             }
             else {               
                 rotation = rotation == 0 ? 3 : rotation - 1;
-                camRotator.Rotate(false);
+                camRotator.Rotate(false, isLookingUp);
             }
             StartCoroutine(WaitForAnim(false));
         }
@@ -125,6 +128,9 @@ public class BoardManager : MonoBehaviour {
         if (lookUp != isLookingUp) {
             isLookingUp = lookUp;
             camRotator.VertRotate(lookUp);
+            float s = isLookingUp ? -1 : 1;
+            rotButtons[0].transform.localScale = new Vector3(-1, s, 1);
+            rotButtons[1].transform.localScale = new Vector3(1, s, 1);
             StartCoroutine(WaitForAnim(false));
         }
     }

@@ -8,21 +8,21 @@ public class CamRotator : MonoBehaviour {
         return t * t * (3 - 2 * t);
     }
 
-    public void Rotate(bool positiveRot) {
+    public void Rotate(bool positiveRot, bool lookUp) {
         float start = transform.eulerAngles.y;
         float end = positiveRot ? start + 90 : start - 90;
-        StartCoroutine(DoRotate(start, end));
+        StartCoroutine(DoRotate(start, end, lookUp));
     }
 
-    IEnumerator DoRotate(float start, float end) {
+    IEnumerator DoRotate(float start, float end, bool lookUp) {
         float t = 0;
         while (t < 1) {
             float curr = Mathf.Lerp(start, end, SmoothStep(t));
-            transform.eulerAngles = new Vector3(35, curr, 0);
+            transform.eulerAngles = new Vector3(lookUp ? -35 : 35, curr, 0);
             t += 5 * Time.deltaTime;
             yield return null;
         }
-        transform.eulerAngles = new Vector3(35f, end, 0);
+        transform.eulerAngles = new Vector3(lookUp ? -35 : 35, end, 0);
     }
 
     public void VertRotate(bool lookUp) {

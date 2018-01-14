@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2221805}
   - component: {fileID: 2221804}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SWButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 198698079}
   - component: {fileID: 198698078}
   m_Layer: 5
-  m_Name: Button
+  m_Name: LeftButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 290685059}
   - component: {fileID: 290685058}
   m_Layer: 5
-  m_Name: Button
+  m_Name: RightButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 369636202}
   - component: {fileID: 369636201}
   m_Layer: 5
-  m_Name: Button
+  m_Name: NEButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1212,7 +1212,7 @@ GameObject:
   - component: {fileID: 547898605}
   - component: {fileID: 547898604}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1333,7 +1333,7 @@ GameObject:
   - component: {fileID: 584494709}
   - component: {fileID: 584494708}
   m_Layer: 5
-  m_Name: Button
+  m_Name: NButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2131,7 +2131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1273534157}
   m_Layer: 5
-  m_Name: MoveBttons
+  m_Name: MoveButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2183,8 +2183,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1284999555}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0000000074505797, w: 1}
+  m_LocalPosition: {x: -0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2210,6 +2210,9 @@ MonoBehaviour:
   gameOverBlockText: {fileID: 836692673}
   gameCanvas: {fileID: 1864266415}
   gameOverCanvas: {fileID: 1845201020}
+  rotButtons:
+  - {fileID: 198698078}
+  - {fileID: 290685058}
 --- !u!1 &1311582262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,7 +2225,7 @@ GameObject:
   - component: {fileID: 1311582265}
   - component: {fileID: 1311582264}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: UpButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2454,7 +2457,7 @@ GameObject:
   - component: {fileID: 1568475164}
   - component: {fileID: 1568475163}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: DownButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2916,7 +2919,7 @@ GameObject:
   - component: {fileID: 1868931768}
   - component: {fileID: 1868931767}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SEButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3188,7 +3191,7 @@ GameObject:
   - component: {fileID: 1940032219}
   - component: {fileID: 1940032218}
   m_Layer: 5
-  m_Name: Button
+  m_Name: NWButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
