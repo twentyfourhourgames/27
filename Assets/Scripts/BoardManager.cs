@@ -24,13 +24,17 @@ public class BoardManager : MonoBehaviour {
 
     Space[] spaces;
     Queue<Block> blockPool;
-    public GameObject blockPrefab;
-    public CamRotator camRotator;
-    public Text scoreText, blockText;
+    [SerializeField]
+    GameObject blockPrefab;
+    [SerializeField]
+    CamRotator camRotator;
+    [SerializeField]
+    Text scoreText, blockText, gameOverScoreText, gameOverBlockText;
+    [SerializeField]
+    Canvas gameCanvas, gameOverCanvas;
     int[] freeSpaces;
     int rotation;
     bool hasMoved, hasMerged, isReady;
-
     int score, bestBlock, colorIndex;
 
     void Awake() {
@@ -47,7 +51,7 @@ public class BoardManager : MonoBehaviour {
         StartGame();
     }
 
-    void StartGame() {
+     public void StartGame() {
         for (int i = 0; i < 27; i++) {
             Block b = spaces[i].block;
             if (b != null) {
@@ -64,6 +68,8 @@ public class BoardManager : MonoBehaviour {
         Block bl = blockPool.Dequeue();
         spaces[num].block = bl;
         bl.Spawn(spaces[num].pos, 1);
+        gameCanvas.enabled = true;
+        gameOverCanvas.enabled = false;
         isReady = true;
     }
 
@@ -205,7 +211,10 @@ public class BoardManager : MonoBehaviour {
 
     IEnumerator DoGameOver() {
         isReady = false;
-        print("GAME OVER");
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
+        gameOverScoreText.text = score.ToString();
+        gameOverBlockText.text = bestBlock.ToString();
+        gameCanvas.enabled = false;
+        gameOverCanvas.enabled = true;
     }
 }
