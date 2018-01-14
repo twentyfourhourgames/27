@@ -37,4 +37,20 @@ public class Block : MonoBehaviour {
         transform.position = merge ? new Vector3(1000,1000,1000) : toPos ;
     }
 
+    public void Merge() {
+        value *= 2;
+        StartCoroutine(DoMerge());
+    }
+
+    IEnumerator DoMerge() {
+        yield return new WaitForSeconds(0.2f);
+        float t = 0;
+        while (t < 1) {
+            float s = 0.8f + 0.5f * Mathf.Sin(t * Mathf.PI);
+            transform.localScale = new Vector3(s, s, s);
+            t +=  5 * Time.deltaTime;
+            yield return null; 
+        }
+        transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+    }
 }
