@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 
+    public int value;
 	// Use this for initialization
 	void Start () {
 		
