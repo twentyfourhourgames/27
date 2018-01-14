@@ -4,11 +4,32 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 
+    static Color[] colors = {
+        Color.HSVToRGB(0,.5f,1), Color.HSVToRGB(1f/12, .5f, 1), Color.HSVToRGB(2f/12, .5f, 1), Color.HSVToRGB(3f/12,.5f,1),
+        Color.HSVToRGB(4f/12,.5f,1), Color.HSVToRGB(5f/12, .5f, 1), Color.HSVToRGB(6f/12, .5f, 1), Color.HSVToRGB(7f/12,.5f,1),
+        Color.HSVToRGB(8f/12,.5f,1), Color.HSVToRGB(9f/12, .5f, 1), Color.HSVToRGB(10f/12, .5f, 1), Color.HSVToRGB(11f/12,.5f,1),
+        Color.HSVToRGB(0,1,1), Color.HSVToRGB(1f/12, 1, 1), Color.HSVToRGB(2f/12, 1, 1), Color.HSVToRGB(3f/12,1,1),
+        Color.HSVToRGB(4f/12,1,1), Color.HSVToRGB(5f/12, 1, 1), Color.HSVToRGB(6f/12, 1, 1), Color.HSVToRGB(7f/12,1,1),
+        Color.HSVToRGB(8f/12,1,1), Color.HSVToRGB(9f/12, 1, 1), Color.HSVToRGB(10f/12, 1, 1), Color.HSVToRGB(11f/12,1,1),
+        new Color(.2f,.2f,.2f), new Color(.6f,.6f,.6f), new Color(1, 1, 1)
+    };
+
     public int value;
-	
+    int colorIndex;
+    MaterialPropertyBlock props;
+    Renderer renderer;
+
+    void Awake() {
+        renderer = GetComponent<Renderer>();
+        props = new MaterialPropertyBlock();
+    }
+
     public void Spawn(Vector3 pos) {
         transform.position = pos;
         value = Random.Range(0, 10) < 9 ? 1 : 2;
+        colorIndex = value - 1;
+        props.SetColor("_Color", colors[colorIndex]);
+        renderer.SetPropertyBlock(props);
         StartCoroutine(DoSpawn());
     }
 
@@ -39,11 +60,14 @@ public class Block : MonoBehaviour {
 
     public void Merge() {
         value *= 2;
+        colorIndex++;
         StartCoroutine(DoMerge());
     }
 
     IEnumerator DoMerge() {
         yield return new WaitForSeconds(0.2f);
+        props.SetColor("_Color", colors[colorIndex]);
+        renderer.SetPropertyBlock(props);
         float t = 0;
         while (t < 1) {
             float s = 0.8f + 0.5f * Mathf.Sin(t * Mathf.PI);
